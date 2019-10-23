@@ -11,7 +11,7 @@ export default class TodoList extends React.Component {
     render() {
         return (
             <ul className="list-group list-group-flush">
-                {this.state.items.map(t => 
+                {this.state.items.map(t =>
                     <TodoItem key={t.id} id={t.id} completed={t.completed} text={t.text} />
                 )}
             </ul>

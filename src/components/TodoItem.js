@@ -19,7 +19,12 @@ export default class TodoItem extends React.Component {
                 <div className="custom-control custom-checkbox">
                     <input checked={this.state.completed} type="checkbox" onChange={this.handleChange} className="custom-control-input" id={"check" + this.state.id} />
                     <label className="custom-control-label" htmlFor={"check" + this.state.id} style={{
-                        textDecoration: this.state.completed ? 'line-through' : 'none'
+                        textDecoration: this.state.completed ? 'line-through' : 'none',
+                        userSelect: 'none',
+                        KhtmlUserSelect: 'none',
+                        msUserSelect: 'none',
+                        WebkitUserSelect: 'none',
+                        cursor: 'pointer'
                     }} >{this.state.text}</label>
                 </div>
             </li>
