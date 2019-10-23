@@ -18,6 +18,6 @@ it('renders without crashing', () => {
 it('checkbox is clickable and state updates', () => {
     const item = shallow(<TodoItem id={1} text={"Test todo"} />);
     expect(item.find('label').text()).toEqual('Test todo');
-    item.find('input').simulate('click');
+    item.find('input').simulate('change');
     expect(item.state('completed')).toBe(true);
 });
