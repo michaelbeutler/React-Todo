@@ -16,7 +16,7 @@ export default class TodoForm extends React.Component {
             this.state.add({ text: this.state.input.value });
             let i = this.state.input;
             i.value = '';
-            this.setState({input: i })
+            this.setState({ input: i })
         }
     }
     handleKeyDown(e) {

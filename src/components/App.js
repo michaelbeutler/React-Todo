@@ -27,23 +27,42 @@ export default class App extends React.Component {
     };
     this.addTodoItem = this.addTodoItem.bind(this);
   }
+
   addTodoItem(todo) {
     todo.id = todo.id ? todo.id : this.state.items.length + 1;
     todo.completed = todo.completed ? todo.completed : false;
-    let items = this.state.items;
-    items.push(todo);
-    this.setState({ items: items });
+    if (todo.text === 'CHUCK') {
+      fetch('https://api.chucknorris.io/jokes/random')
+        .then(response => response.json())
+        .then(data => todo.text = data.value)
+        .then(() => {
+          let items = this.state.items;
+          items.push(todo);
+          this.setState({ items: items })
+        });
+    } else if (todo.text === 'TIMON') {
+      todo.text = 'Get cloudy';
+      let items = this.state.items;
+      items.push(todo);
+      this.setState({ items: items })
+    } else {
+      let items = this.state.items;
+      items.push(todo);
+      this.setState({ items: items })
+    }
   }
+
   render() {
+    let items = this.state.items;
     return (
-      <div className="app container mt-3" >
+      <div className="app container mt-3 mb-3" >
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">ToDo</h5>
 
             <div className="row border-top">
               <div className="col">
-                <TodoList items={this.state.items} />
+                <TodoList items={items} />
               </div>
             </div>
 
