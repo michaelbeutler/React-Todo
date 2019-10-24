@@ -28,27 +28,31 @@ export default class App extends React.Component {
     this.addTodoItem = this.addTodoItem.bind(this);
   }
 
-  addTodoItem(todo) {
-    todo.id = todo.id ? todo.id : this.state.items.length + 1;
-    todo.completed = todo.completed ? todo.completed : false;
-    if (todo.text === 'CHUCK') {
-      fetch('https://api.chucknorris.io/jokes/random')
-        .then(response => response.json())
-        .then(data => todo.text = data.value)
-        .then(() => {
-          let items = this.state.items;
-          items.push(todo);
-          this.setState({ items: items })
-        });
-    } else if (todo.text === 'TIMON') {
-      todo.text = 'Get cloudy';
-      let items = this.state.items;
-      items.push(todo);
-      this.setState({ items: items })
-    } else {
-      let items = this.state.items;
-      items.push(todo);
-      this.setState({ items: items })
+  addTodoItem({ id = this.state.items.length + 1, text, completed = false }) {
+    let todo = {id, text, completed};
+    this.handelEasterEgg({
+      text: todo.text, callback: (text) => {
+        todo.text = text;
+        let items = this.state.items;
+        items.push(todo);
+        this.setState({ items: items })
+      }
+    })
+  }
+
+  handelEasterEgg({ callback, text }) {
+    switch (text.toUpperCase()) {
+      case 'CHUCK':
+        fetch('https://api.chucknorris.io/jokes/random')
+          .then(response => response.json())
+          .then((data) => {
+            callback(data.value);
+          });
+        break;
+
+      default:
+        callback(text);
+        break;
     }
   }
 
