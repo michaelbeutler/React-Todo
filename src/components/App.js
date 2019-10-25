@@ -7,29 +7,22 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        {
-          id: 1,
-          completed: false,
-          text: "eat apple"
-        },
-        {
-          id: 2,
-          completed: true,
-          text: "buy apple"
-        },
-        {
-          id: 3,
-          completed: true,
-          text: "drink milk"
-        }
-      ]
+      items: []
     };
     this.addTodoItem = this.addTodoItem.bind(this);
   }
 
+  componentDidMount() {
+    let eggs = ["CHUCK", "CHUCK", "CHUCK", "CAT", "CAT", "CAT", "KANYE"];
+    let c = [true, false, false, false];
+
+    for (let i = 0; i < Math.floor(Math.random() * 8 + 4); i++) {
+      this.addTodoItem({ id: i, text: eggs[Math.floor(Math.random() * eggs.length)], completed: c[Math.floor(Math.random() * c.length)] });
+    }
+  }
+
   addTodoItem({ id = this.state.items.length + 1, text, completed = false }) {
-    let todo = {id, text, completed};
+    let todo = { id, text, completed };
     this.handelEasterEgg({
       text: todo.text, callback: (text) => {
         todo.text = text;
@@ -42,11 +35,31 @@ export default class App extends React.Component {
 
   handelEasterEgg({ callback, text }) {
     switch (text.toUpperCase()) {
+      case 'CHUCK NORRIS':
       case 'CHUCK':
+      case 'JOKE':
         fetch('https://api.chucknorris.io/jokes/random')
           .then(response => response.json())
           .then((data) => {
-            callback(data.value);
+            callback("laugh at a good joke: " + data.value);
+          });
+        break;
+
+      case 'MEOW':
+      case 'CAT':
+        fetch('https://meowfacts.herokuapp.com/')
+          .then(response => response.json())
+          .then((data) => {
+            callback("read this random cat fact: " + data.data);
+          });
+        break;
+
+      case 'KANYE WEST':
+      case 'KANYE':
+        fetch('https://api.kanye.rest')
+          .then(response => response.json())
+          .then((data) => {
+            callback("read this random kanye west quote: " + data.quote);
           });
         break;
 
